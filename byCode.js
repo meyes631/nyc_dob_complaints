@@ -7,6 +7,7 @@ var complaintCodes;
 var sortedStreets;
 var whichStreet = 0;
 var code;
+var complaintCodes;
 
 function preload(){
     complaints = loadJSON("data/complaints.json");
@@ -51,7 +52,21 @@ function draw() {
     text("complaints about",windowWidth/2,200);
 
     fill("#ED6A5A");
-    text(code,0,260,windowWidth, 250);
+    text(complaintCodes[code]["category"],0,260,windowWidth, 250);
+
+
+    // TRYING TO FIGURE OUT HOW TO CHANGE THE BG IN RELATION TO THE PRIORITY
+
+
+    if (complaintCodes[code]["priority"][A]) {
+        background(red);
+    } else {
+        background(orange);
+    } else{
+        background(yellow);
+    } else{
+        background(green);
+    }
 
 }
 
