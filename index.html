@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <title>DOB Complaints</title>
+		<style>
+			body{
+				background: #E6EBE0;
+				color: #133;
+				font-family: Arial,sans-serif;
+
+			}
+			#wrapper{
+				max-width:800px;
+				margin: 0 auto;
+			}
+			pre,code{
+				font-size: 16px;
+				
+				background-color: #C6CBC0
+			}
+			pre{padding: 4px;}
+			h3{
+				margin: 40px 0 0 0;
+			}
+			.task{background-color: #9CD4D9;padding: 4px 6px;border-radius: 3px;}
+			ol li{list-style-position: inside}
+		</style>
+	</head>
+
+	<body>
+	<div id="wrapper">
+    <h1>NYC DOB Complaints</h1>
+		<p>For today's assignment we will be working with two data sets:</p>
+		<ul>
+			<li><a href="https://nycopendata.socrata.com/Housing-Development/DOB-Complaints-Received/eabe-havv">Department of Buildings Complaints</a></li>
+			<li><a href="http://www.nyc.gov/html/dob/downloads/pdf/complaint_category.pdf">Complaint Category Codes</a></li>
+		</ul>
+
+		<p class="task"><strong>Task:</strong> You'll need to download the first data set because it is too large for GitHub, and their website is too slow to directly link to it in your program. <a href="https://nycopendata.socrata.com/api/views/eabe-havv/rows.json?accessType=DOWNLOAD">Click here</a> to download the json. Move the file into the data folder of your project and rename it to complaints.json</p>
+		<p>The second dataset has been downloaded and saved as JSON files in the <code>data</code> folder of this project</p>
+
+		<h3>The console is your friend</h3>
+		<p>Open up the console in your browser and use it to play around with the data. Any global variable you have in your program can be called from the console. Not sure what <code>complaints.data[0][15]</code> equals? You can type it into your console. You can also print anything to your console while the program is running by using <code>colsole.log(yourVariable);</code> in your javascript file.</p> 
+
+<hr />
+<h2>Assignment</h2>
+
+
+<h3><a href="byStreets.html">By Streets</a></h3>
+
+<h3>Sanitizing Data</h3>
+
+<p class="task"><strong>Task:</strong> Right now the program gives you streen names with lots of spaces at the end of it. Using the method of removing whitespace below, get rid of these extra spaces. You'll want to do this as early on in the code as possible, before or while you're counting.</p>
+			<p>A lot of times public data hasn't been cleaned up. By that I mean, there might be lots of spaces at the end of a field. Or sometimes a street name might be in all caps and sometimes it's lowercase. This can make it hard to work with the data. There's a few things you can do to address this.</p>
+			<p>Let's say you have some text: <code>var string = "BroadWAY Ave   "</code></p>
+			<p>Get rid of whitespace: <code>string.trim()</code> => "BroadWAY Ave"</p>
+			<p>Make it all lowercase: <code>string.toLowerCase()</code> => "broadway ave&nbsp;&nbsp;&nbsp;"</p>
+			<p>Make it all uppercase: <code>string.toUpperCase()</code> => "BROADWAY AVE&nbsp;&nbsp;&nbsp;"</p>
+
+
+
+<h3>Search</h3>
+
+	<p class="task"><strong>Task:</strong> Knowing that streets run East to West and avenues run North to South, enhance this program to show horizontal lines behind the text if the street name has the word "street" in it, and vertical lines if it has "avenue."</p>
+
+
+<p>You can search for a word by checking if <code>.indexOf("street")</code> gives you back a number greater than -1. What this function does is it returns the location of a word in a string. This function will give you a negative number if it can't find the word, and 0 or greater if it finds the word.</p>
+
+<p>For example, given <code>var streetName = "14 street";</code>. indexOf returns the following:</p>
+
+<p><code>streetName.indexOf("street")</code> => 3<br />
+<code>streetName.indexOf("14")</code> => 0<br />
+<code>streetName.indexOf("asdf")</code> => -1
+</p>
+
+<p>You can use this in an if statment like this:</p>
+<pre><code>var streetName = "14 street";
+if(streetName.indexOf("street") > -1){
+	//then it contains street
+} else{
+	//it doesn't contain street
+}
+</code></pre>
+
+	
+		<h3><a href="byCode.html">By Complaint Type</a></h3>
+
+		<h3>Associating data</h3>
+		<p>Right now this program gives you the complaint code, but what you want is for it to give you the name of the type complaint. To do this you'll have to use the complaint code to look up the category name in the second data set. </p>
+
+		<ol class="task">
+			<li>Load the complaintCodes.json file in the preload function</li>
+			<li>Save it to a global variable</li>
+			<li>Look for where in the javascript the complaint code is being printed</li>
+			<li>Replace it with the complaint category name by using that error code to look up the category</li> 
+		</ol>
+
+		<h3>Error handling</h3>
+
+		<p>(Don't do this step until you finish associating the data.)</p>
+			<p class="task"><strong>Task:</strong> If you arrow down low enough on byCode.html it stalls out and the complaint name disapears (It stops at 2931 complaints). That's because it couldn't find a category name that corresponded to the complaint code for that record (complaint #84). Fix this by implementing error handling and skipping over records that don't exist.</p>
+
+		<p>For example, let's say you're trying to look up a zip code and print out the city name. You might write it like this:</p>
+
+<pre><code>var zip = "12345"
+var zipList = {"10014":"NYC", "33101": "Miami", "94101": "San Francisco"}
+var city = zipList[zip];
+text(city,0,0);
+</code></pre>
+
+		<p>The above won't find the zip you're looking for though, because it's not listed in <code>zipList</code>. You always want to make sure you've found the data before you use it. You can do this by using an if statement like this:<p>
+<pre><code>var zip = "12345"
+var zipList = {"10014":"NYC", "33101": "Miami", "94101": "San Francisco"}
+var city = zipList[zip];
+if(city){
+	text(city,0,0);
+}
+</code></pre>
+		<p>Now your program won't throw an error when it tries to print the city name for a zip you don't have information for. It will just skip that zip.</p>
+
+
+
+<h3>Priority</h3>
+ <p>The complaint types come with a priority level. If you open up <a href="data/complaintCodes.json">complaintCodes.json</a> in Sublime you'll see that they can have one of the following priorities: A, B, C, D</p>
+<p class="task"><strong>Task: </strong>Use these levels to change the design of the page. For example, you could change background color depending on the level.</p>
+
+
+<h4>Bonus</h4>
+<p>If you have extra time in class, think about other ways to enhance the visualization of this data. Are there other questions you want to ask this data? What do you want the viewer to know?</p>
+<p>If you're interested in other NYC data, or want to see some examples of what people have done with city data, you can browse their <a href="https://nycopendata.socrata.com/">open data portal</a>. 
+<br />
+		</div>
+	</body>
+</html>
